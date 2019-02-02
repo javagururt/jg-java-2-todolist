@@ -45,12 +45,15 @@ public class ToDoListApplication {
         task.setName(name);
         task.setDescription(description);
 
-        task.setId(TASK_ID_SEQUENCE);
+        if (task.getName() == null) {
+            throw new IllegalArgumentException("Task name must be not null.");
+        }
 
+        task.setId(TASK_ID_SEQUENCE);
         tasks.put(TASK_ID_SEQUENCE, task);
+        TASK_ID_SEQUENCE++;
 
         System.out.println("Task created, id:  " + task.getId());
-        TASK_ID_SEQUENCE++;
     }
 
     private static void findTask(Map<Long, Task> tasks) {
