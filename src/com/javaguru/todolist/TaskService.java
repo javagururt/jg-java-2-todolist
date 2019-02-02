@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-class DefaultTaskService {
+public class TaskService {
 
     private Map<Long, Task> database = new HashMap<>();
     private Long TASK_ID_SEQUENCE = 0L;
