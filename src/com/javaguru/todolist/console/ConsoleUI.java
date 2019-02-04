@@ -1,8 +1,11 @@
-package com.javaguru.todolist;
+package com.javaguru.todolist.console;
+
+import com.javaguru.todolist.domain.Task;
+import com.javaguru.todolist.service.TaskService;
 
 import java.util.Scanner;
 
-class ConsoleUI {
+public class ConsoleUI {
 
     private TaskService taskService = new TaskService();
 

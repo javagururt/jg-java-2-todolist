@@ -1,11 +1,13 @@
-package com.javaguru.todolist;
+package com.javaguru.todolist.repository;
+
+import com.javaguru.todolist.domain.Task;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class TaskInMemoryRepository {
 
-    private  Long TASK_ID_SEQUENCE = 0L;
+    private Long TASK_ID_SEQUENCE = 0L;
     private Map<Long, Task> tasks = new HashMap<>();
 
     public Task insert(Task task) {
