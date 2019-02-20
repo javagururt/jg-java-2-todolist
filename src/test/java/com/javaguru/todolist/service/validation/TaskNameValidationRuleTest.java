@@ -1,14 +1,11 @@
 package com.javaguru.todolist.service.validation;
 
 import com.javaguru.todolist.domain.Task;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class TaskNameValidationRuleTest {
-
-    @Rule
-    public final ExpectedException expectedException = ExpectedException.none();
 
     private TaskNameValidationRule victim = new TaskNameValidationRule();
 
@@ -18,9 +15,9 @@ public class TaskNameValidationRuleTest {
     public void shouldThrowTaskValidationException() {
         input = task(null);
 
-        expectedException.expect(TaskValidationException.class);
-        expectedException.expectMessage("Task name must be not null.");
-        victim.validate(input);
+        assertThatThrownBy(() -> victim.validate(input))
+                .isInstanceOf(TaskValidationException.class)
+                .hasMessage("Task name must be not null.");
     }
 
     @Test

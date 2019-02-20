@@ -20,4 +20,10 @@ public class TaskInMemoryRepository {
     public Task findTaskById(Long id) {
         return tasks.get(id);
     }
+
+    public boolean existsByName(String name) {
+        return tasks.values()
+                .stream()
+                .anyMatch(task -> task.getName().equalsIgnoreCase(name));
+    }
 }
