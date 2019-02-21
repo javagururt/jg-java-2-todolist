@@ -11,7 +11,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -31,7 +35,7 @@ public class TaskServiceTest {
     private ArgumentCaptor<Task> taskCaptor;
 
     @Test
-    public void shouldCreateTaskSuccessfully() {
+    public void shouldCreateTask() {
         Task task = task();
         when(repository.insert(task)).thenReturn(task);
 
@@ -42,6 +46,24 @@ public class TaskServiceTest {
 
         assertThat(captorResult).isEqualTo(task);
         assertThat(task.getId()).isEqualTo(result);
+    }
+
+    @Test
+    public void shouldFindTaskById() {
+        when(repository.findTaskById(1001L)).thenReturn(Optional.ofNullable(task()));
+
+        Task result = victim.findTaskById(1001L);
+
+        assertThat(result).isEqualTo(task());
+    }
+
+    @Test
+    public void shouldThrowExceptionTaskNotFound() {
+        when(repository.findTaskById(any())).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> victim.findTaskById(1001L))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("Task not found, id: 1001");
     }
 
     private Task task() {

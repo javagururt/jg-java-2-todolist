@@ -18,8 +18,8 @@ public class TaskInMemoryRepository {
         return task;
     }
 
-    public Task findTaskById(Long id) {
-        return tasks.get(id);
+    public Optional<Task> findTaskById(Long id) {
+        return Optional.ofNullable(tasks.get(id));
     }
 
     public boolean existsByName(String name) {

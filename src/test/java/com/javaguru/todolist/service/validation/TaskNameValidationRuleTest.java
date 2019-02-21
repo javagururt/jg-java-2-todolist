@@ -2,12 +2,18 @@ package com.javaguru.todolist.service.validation;
 
 import com.javaguru.todolist.domain.Task;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.verify;
 
+@RunWith(MockitoJUnitRunner.class)
 public class TaskNameValidationRuleTest {
 
-    private TaskNameValidationRule victim = new TaskNameValidationRule();
+    @Spy
+    private TaskNameValidationRule victim;
 
     private Task input;
 
@@ -18,6 +24,7 @@ public class TaskNameValidationRuleTest {
         assertThatThrownBy(() -> victim.validate(input))
                 .isInstanceOf(TaskValidationException.class)
                 .hasMessage("Task name must be not null.");
+        verify(victim).checkNotNull(input);
     }
 
     @Test
@@ -25,6 +32,8 @@ public class TaskNameValidationRuleTest {
         input = task("valid name");
 
         victim.validate(input);
+
+        verify(victim).checkNotNull(input);
     }
 
     private Task task(String name) {

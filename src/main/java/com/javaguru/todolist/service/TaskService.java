@@ -4,6 +4,8 @@ import com.javaguru.todolist.domain.Task;
 import com.javaguru.todolist.repository.TaskInMemoryRepository;
 import com.javaguru.todolist.service.validation.TaskValidationService;
 
+import java.util.NoSuchElementException;
+
 public class TaskService {
 
     private final TaskInMemoryRepository repository;
@@ -22,6 +24,7 @@ public class TaskService {
     }
 
     public Task findTaskById(Long id) {
-        return repository.findTaskById(id);
+        return repository.findTaskById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Task not found, id: " + id));
     }
 }
