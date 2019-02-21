@@ -4,6 +4,7 @@ import com.javaguru.todolist.domain.Task;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class TaskInMemoryRepository {
 
@@ -20,4 +21,16 @@ public class TaskInMemoryRepository {
     public Task findTaskById(Long id) {
         return tasks.get(id);
     }
+
+    public boolean existsByName(String name) {
+        return tasks.values().stream()
+                .anyMatch(task -> task.getName().equalsIgnoreCase(name));
+    }
+
+    public Optional<Task> findTaskByName(String name) {
+        return tasks.values().stream()
+                .filter(task -> task.getName().equalsIgnoreCase(name))
+                .findFirst();
+    }
+
 }

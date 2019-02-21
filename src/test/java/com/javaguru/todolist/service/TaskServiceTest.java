@@ -11,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -40,8 +40,8 @@ public class TaskServiceTest {
         verify(validationService).validate(taskCaptor.capture());
         Task captorResult = taskCaptor.getValue();
 
-        assertEquals(captorResult, task);
-        assertEquals(task.getId(), result);
+        assertThat(captorResult).isEqualTo(task);
+        assertThat(task.getId()).isEqualTo(result);
     }
 
     private Task task() {

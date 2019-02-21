@@ -6,8 +6,14 @@ import com.javaguru.todolist.service.validation.TaskValidationService;
 
 public class TaskService {
 
-    private TaskInMemoryRepository repository = new TaskInMemoryRepository();
-    private TaskValidationService validationService = new TaskValidationService();
+    private final TaskInMemoryRepository repository;
+    private final TaskValidationService validationService;
+
+    public TaskService(TaskInMemoryRepository repository,
+                       TaskValidationService validationService) {
+        this.repository = repository;
+        this.validationService = validationService;
+    }
 
     public Long createTask(Task task) {
         validationService.validate(task);
