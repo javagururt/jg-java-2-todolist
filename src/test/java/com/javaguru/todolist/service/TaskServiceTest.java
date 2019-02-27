@@ -3,6 +3,7 @@ package com.javaguru.todolist.service;
 import com.javaguru.todolist.domain.Task;
 import com.javaguru.todolist.repository.TaskInMemoryRepository;
 import com.javaguru.todolist.service.validation.TaskValidationService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -28,11 +29,15 @@ public class TaskServiceTest {
     @Mock
     private TaskValidationService validationService;
 
-    @InjectMocks
-    private TaskService victim;
-
     @Captor
     private ArgumentCaptor<Task> taskCaptor;
+
+    private TaskService victim;
+
+    @Before
+    public void setUp() throws Exception {
+        victim = new DefaultTaskService(repository, validationService);
+    }
 
     @Test
     public void shouldCreateTask() {
