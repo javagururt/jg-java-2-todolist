@@ -1,21 +1,25 @@
 package com.javaguru.todolist.service;
 
 import com.javaguru.todolist.domain.Task;
-import com.javaguru.todolist.repository.TaskInMemoryRepository;
+import com.javaguru.todolist.repository.TaskRepository;
 import com.javaguru.todolist.service.validation.TaskValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.NoSuchElementException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Component
 public class DefaultTaskService implements TaskService {
 
-    private final TaskInMemoryRepository repository;
+    private final TaskRepository repository;
     private final TaskValidationService validationService;
 
     @Autowired
-    public DefaultTaskService(TaskInMemoryRepository repository,
+    public DefaultTaskService(TaskRepository repository,
                               TaskValidationService validationService) {
         this.repository = repository;
         this.validationService = validationService;
@@ -23,8 +27,7 @@ public class DefaultTaskService implements TaskService {
 
     public Long createTask(Task task) {
         validationService.validate(task);
-        Task createdTask = repository.insert(task);
-        return createdTask.getId();
+        return repository.insert(task);
     }
 
     public Task findTaskById(Long id) {

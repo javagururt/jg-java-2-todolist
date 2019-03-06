@@ -20,9 +20,9 @@ public class TaskInMemoryRepositoryTest {
 
     @Test
     public void shouldInsert() {
-        Task result = victim.insert(task);
+        Long result = victim.insert(task);
 
-        assertThat(result).isEqualTo(expectedTask());
+        assertThat(result).isEqualTo(expectedTask().getId());
     }
 
     @Test
