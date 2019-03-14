@@ -5,6 +5,8 @@ import com.javaguru.todolist.repository.TaskRepository;
 import com.javaguru.todolist.service.validation.TaskValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Component
+@Service
 public class DefaultTaskService implements TaskService {
 
     private final TaskRepository repository;
@@ -25,6 +27,7 @@ public class DefaultTaskService implements TaskService {
         this.validationService = validationService;
     }
 
+    @Transactional
     public Long createTask(Task task) {
         validationService.validate(task);
         return repository.insert(task);
