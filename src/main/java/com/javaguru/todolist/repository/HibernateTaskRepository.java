@@ -6,7 +6,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -42,7 +41,7 @@ class HibernateTaskRepository implements TaskRepository {
     public boolean existsByName(String name) {
         String query = "select case when count(*)> 0 " +
                 "then true else false end " +
-                "from Task where name=" + name;
+                "from Task t where t.name='" + name + "'";
         return (boolean) sessionFactory.getCurrentSession().createQuery(query)
                 .setMaxResults(1)
                 .uniqueResult();
