@@ -24,7 +24,8 @@ class AssignTaskAction implements Action {
         System.out.println("Enter task id: ");
         Long taskId = scanner.nextLong();
 
-        userTaskService.assignTask(userId, taskId);
+        Long response = userTaskService.assignTask(userId, taskId);
+        System.out.println("Response: " + response);
     }
 
     @Override

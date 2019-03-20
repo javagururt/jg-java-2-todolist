@@ -23,12 +23,12 @@ public class UserTaskService {
         this.userTaskRepository = userTaskRepository;
     }
 
-    public void assignTask(Long userId, Long taskId) {
+    public Long assignTask(Long userId, Long taskId) {
         Task task = taskService.findTaskById(taskId);
         User user = userService.findUserById(userId);
         UserTask userTask = new UserTask();
         userTask.setTask(task);
         userTask.setUser(user);
-        userTaskRepository.save(userTask);
+        return userTaskRepository.save(userTask);
     }
 }
