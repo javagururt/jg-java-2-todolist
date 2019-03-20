@@ -10,3 +10,37 @@ CREATE TABLE IF NOT EXISTS tasks (
 )
   ENGINE = InnoDB
   AUTO_INCREMENT = 1002;
+
+CREATE TABLE IF NOT EXISTS users (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  login VARCHAR(100) NOT NULL,
+  password VARCHAR(100) NOT NULL,
+  created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+)
+ENGINE = InnoDB
+AUTO_INCREMENT = 1002;
+
+CREATE TABLE IF NOT EXISTS user_tasks (
+  id BIGINT NOT NULL AUTO_INCREMENT,
+  task_id BIGINT NOT NULL,
+  user_id BIGINT NOT NULL,
+  created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id)
+)
+ENGINE = InnoDB
+AUTO_INCREMENT = 1002;
+
+ALTER TABLE user_tasks
+ADD CONSTRAINT fk_user_tasks_user_id
+FOREIGN KEY (user_id) REFERENCES users(id);
+
+ALTER TABLE user_tasks
+ADD INDEX idx_user_tasks_user_id(user_id);
+
+ALTER TABLE user_tasks
+ADD CONSTRAINT fk_user_tasks_task_id
+FOREIGN KEY (task_id) REFERENCES tasks(id);
+
+ALTER TABLE user_tasks
+ADD INDEX idx_user_tasks_task_id(task_id);
