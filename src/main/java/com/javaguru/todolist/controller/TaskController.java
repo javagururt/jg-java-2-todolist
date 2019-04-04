@@ -1,10 +1,16 @@
 package com.javaguru.todolist.controller;
 
-import com.javaguru.todolist.domain.Task;
-import com.javaguru.todolist.dto.TaskDTO;
+import com.javaguru.todolist.dto.TaskDto;
 import com.javaguru.todolist.service.TaskService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import javax.validation.Valid;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/tasks")
@@ -17,17 +23,43 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Task> create(@RequestBody TaskDTO taskDTO) {
-        Task task = new Task();
-        task.setName(taskDTO.getName());
-        task.setDescription(taskDTO.getDescription());
-        taskService.createTask(task);
-        return ResponseEntity.ok(task);
+    public ResponseEntity<Void> create(@Validated({TaskDto.Create.class}) @RequestBody TaskDto taskDto,
+                                       UriComponentsBuilder builder) {
+        Long id = taskService.createTask(taskDto);
+        return ResponseEntity.created(builder.path("/tasks/{id}").buildAndExpand(id).toUri()).build();
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@PathVariable Long id, @Validated({TaskDto.Update.class}) @RequestBody TaskDto taskDto) {
+        taskService.updateTask(taskDto);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        taskService.deleteTask(id);
     }
 
     @GetMapping("/{id}")
-    public TaskDTO findTaskById(@PathVariable("id") Long id) {
-        Task task = taskService.findTaskById(id);
-        return new TaskDTO(task.getId(), task.getName(), task.getDescription());
+    public TaskDto findTaskById(@PathVariable("id") Long id) {
+        return taskService.findTaskById(id);
     }
+
+    @GetMapping(params = "name")
+    public TaskDto findTaskByName(@RequestParam("name") String name) {
+        return taskService.findTaskByName(name);
+    }
+
+    @GetMapping
+    public List<TaskDto> findAll() {
+        return taskService.findAll();
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public void handleNoSuchElementException(NoSuchElementException ex) {
+
+    }
+
 }

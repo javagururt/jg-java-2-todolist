@@ -23,13 +23,15 @@ class HibernateTaskRepository implements TaskRepository {
         this.sessionFactory = sessionFactory;
     }
 
-    @Override
-    public Long insert(Task task) {
+    public Long save(Task task) {
         sessionFactory.getCurrentSession().save(task);
         return task.getId();
     }
 
-    @Override
+    public void update(Task task) {
+        sessionFactory.getCurrentSession().saveOrUpdate(task);
+    }
+
     public Optional<Task> findTaskById(Long id) {
         Task task = (Task) sessionFactory.getCurrentSession().createCriteria(Task.class)
                 .add(Restrictions.eq("id", id))
@@ -37,7 +39,6 @@ class HibernateTaskRepository implements TaskRepository {
         return Optional.ofNullable(task);
     }
 
-    @Override
     public boolean existsByName(String name) {
         String query = "select case when count(*)> 0 " +
                 "then true else false end " +
@@ -47,7 +48,6 @@ class HibernateTaskRepository implements TaskRepository {
                 .uniqueResult();
     }
 
-    @Override
     public Optional<Task> findTaskByName(String name) {
         Task task = (Task) sessionFactory.getCurrentSession().createCriteria(Task.class)
                 .add(Restrictions.eq("name", name))

@@ -10,11 +10,11 @@ import java.util.List;
 
 @Repository
 @Transactional
-public class HibernateUserTaskRepository {
+public class UserTaskRepository {
 
     private final SessionFactory sessionFactory;
 
-    public HibernateUserTaskRepository(SessionFactory sessionFactory) {
+    public UserTaskRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
