@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-@Profile("hibernate")
 @Transactional
 class HibernateTaskRepository implements TaskRepository {
 
@@ -54,7 +53,6 @@ class HibernateTaskRepository implements TaskRepository {
                 .uniqueResult();
         return Optional.ofNullable(task);
     }
-
 
     public List<Task> findAll() {
         return sessionFactory.getCurrentSession().createCriteria(Task.class)
