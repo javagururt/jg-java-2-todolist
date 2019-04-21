@@ -31,7 +31,7 @@ public class TaskService {
     public Long createTask(TaskDto taskDto) {
         validationService.validate(taskDto);
         Task task = taskConverter.convert(taskDto);
-        return repository.save(task);
+        return repository.save(task).getId();
     }
 
     public TaskDto findTaskById(Long id) {
@@ -48,7 +48,7 @@ public class TaskService {
 
     public void updateTask(TaskDto taskDto) {
         Task task = taskConverter.convert(taskDto);
-        repository.update(task);
+        repository.save(task);
     }
 
     public List<TaskDto> findAll() {

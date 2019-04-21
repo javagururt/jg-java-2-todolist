@@ -49,7 +49,7 @@ public class TaskServiceTest {
         TaskDto taskDto = taskDto();
         Task task = task();
         when(taskConverter.convert(taskDto)).thenReturn(task);
-        when(repository.save(task)).thenReturn(task.getId());
+        when(repository.save(task)).thenReturn(task);
 
         Long result = victim.createTask(taskDto);
 

@@ -1,34 +1,11 @@
 package com.javaguru.todolist.repository;
 
 import com.javaguru.todolist.domain.User;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-@Repository
-@Transactional
-public class UserRepository {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    private final SessionFactory sessionFactory;
-
-    @Autowired
-    UserRepository(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    public Long save(User user) {
-        sessionFactory.getCurrentSession().save(user);
-        return user.getId();
-    }
-
-    public Optional<User> findUserById(Long id) {
-        User user = (User) sessionFactory.getCurrentSession().createCriteria(User.class)
-                .add(Restrictions.eq("id", id))
-                .uniqueResult();
-        return Optional.ofNullable(user);
-    }
+    Optional<User> findUserById(Long id);
 }

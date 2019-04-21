@@ -16,7 +16,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-@Import(value = {HibernateTaskRepository.class, AppConfig.class})
 public class TaskRepositoryIT {
 
     @Autowired
@@ -28,9 +27,9 @@ public class TaskRepositoryIT {
         task.setName("TEST_NAME");
         task.setDescription("TEST_DESCRIPTION");
 
-        Long result = victim.save(task);
+        Task result = victim.save(task);
 
-        assertThat(result).isNotNull();
+        assertThat(result).isEqualTo(expectedTask(task.getId()));
     }
 
     @Test
@@ -39,11 +38,11 @@ public class TaskRepositoryIT {
         task.setName("TEST_NAME");
         task.setDescription("TEST_DESCRIPTION");
 
-        Long id = victim.save(task);
+        Task savedTask = victim.save(task);
 
         Optional<Task> result = victim.findTaskByName("TEST_NAME");
 
-        assertThat(result).hasValue(expectedTask(id));
+        assertThat(result).hasValue(expectedTask(savedTask.getId()));
     }
 
     @Test
@@ -52,7 +51,8 @@ public class TaskRepositoryIT {
         task.setName("TEST_NAME");
         task.setDescription("TEST_DESCRIPTION");
 
-        Long id = victim.save(task);
+        Task savedTask = victim.save(task);
+        Long id = savedTask.getId();
 
         Optional<Task> result = victim.findTaskById(id);
         assertThat(result).hasValue(expectedTask(id));
