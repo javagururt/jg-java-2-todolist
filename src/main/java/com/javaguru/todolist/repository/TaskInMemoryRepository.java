@@ -11,9 +11,8 @@ public class TaskInMemoryRepository {
     private Map<Long, Task> tasks = new HashMap<>();
 
     public Task insert(Task task) {
-        task.setId(taskIdSequence);
+        task.setId(taskIdSequence++);
         tasks.put(task.getId(), task);
-        taskIdSequence++;
         return task;
     }
 
