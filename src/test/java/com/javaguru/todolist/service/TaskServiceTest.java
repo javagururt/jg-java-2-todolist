@@ -8,7 +8,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -37,7 +36,7 @@ public class TaskServiceTest {
 
     @Before
     public void setUp() throws Exception {
-        victim = new DefaultTaskService(repository, validationService);
+        victim = new TaskService(repository, validationService);
     }
 
     @Test

@@ -1,7 +1,7 @@
 package com.javaguru.todolist.console;
 
 import com.javaguru.todolist.domain.Task;
-import com.javaguru.todolist.service.DefaultTaskService;
+import com.javaguru.todolist.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,10 +10,10 @@ import java.util.Scanner;
 @Component
 public class ConsoleUI {
 
-    private final DefaultTaskService taskService;
+    private final TaskService taskService;
 
     @Autowired
-    public ConsoleUI(DefaultTaskService taskService) {
+    public ConsoleUI(TaskService taskService) {
         this.taskService = taskService;
     }
 
