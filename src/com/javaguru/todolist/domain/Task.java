@@ -1,4 +1,4 @@
-package com.javaguru.todolist;
+package com.javaguru.todolist.domain;
 
 import java.util.Objects;
 
