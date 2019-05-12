@@ -6,11 +6,11 @@ import java.util.Scanner;
 
 public class ToDoListApplication {
 
-    private static Long TASK_ID_SEQUENCE = 0L;
+    private static Long taskIdSequence = 0L;
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Map<Long, Task> tasks = new HashMap<>();
+        Map<Long, Task> repository = new HashMap<>();
 
         while (true) {
             try {
@@ -20,10 +20,10 @@ public class ToDoListApplication {
                 int userInput = scanner.nextInt();
                 switch (userInput) {
                     case 1:
-                        createTask(tasks);
+                        createTask(repository);
                         break;
                     case 2:
-                        findTask(tasks);
+                        findTask(repository);
                         break;
                     case 3:
                         return;
@@ -45,12 +45,15 @@ public class ToDoListApplication {
         task.setName(name);
         task.setDescription(description);
 
-        task.setId(TASK_ID_SEQUENCE);
+        if (task.getName() == null) {
+            throw new IllegalArgumentException("Task name must be not null.");
+        }
 
-        tasks.put(TASK_ID_SEQUENCE, task);
+        task.setId(taskIdSequence);
+        tasks.put(task.getId(), task);
+        taskIdSequence++;
 
         System.out.println("Task created, id:  " + task.getId());
-        TASK_ID_SEQUENCE++;
     }
 
     private static void findTask(Map<Long, Task> tasks) {
