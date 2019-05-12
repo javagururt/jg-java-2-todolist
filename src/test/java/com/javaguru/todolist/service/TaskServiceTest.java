@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,7 +43,7 @@ public class TaskServiceTest {
     @Test
     public void shouldCreateTask() {
         Task task = task();
-        when(repository.insert(task)).thenReturn(task);
+        when(repository.save(task)).thenReturn(task);
 
         Long result = victim.createTask(task);
 
@@ -67,7 +68,7 @@ public class TaskServiceTest {
         when(repository.findTaskById(any())).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> victim.findTaskById(1001L))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("Task not found, id: 1001");
     }
 
