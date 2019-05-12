@@ -7,13 +7,13 @@ import java.util.Map;
 
 public class TaskInMemoryRepository {
 
-    private Long TASK_ID_SEQUENCE = 0L;
+    private Long taskIdSequence = 0L;
     private Map<Long, Task> tasks = new HashMap<>();
 
     public Task insert(Task task) {
-        task.setId(TASK_ID_SEQUENCE);
-        tasks.put(TASK_ID_SEQUENCE, task);
-        TASK_ID_SEQUENCE++;
+        task.setId(taskIdSequence);
+        tasks.put(task.getId(), task);
+        taskIdSequence++;
         return task;
     }
 
