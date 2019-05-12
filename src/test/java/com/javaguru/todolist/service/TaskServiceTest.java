@@ -37,7 +37,7 @@ public class TaskServiceTest {
     @Test
     public void shouldCreateTask() {
         Task task = task();
-        when(repository.insert(task)).thenReturn(task);
+        when(repository.save(task)).thenReturn(task);
 
         Long result = victim.createTask(task);
 

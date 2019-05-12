@@ -20,14 +20,14 @@ public class TaskInMemoryRepositoryTest {
 
     @Test
     public void shouldInsert() {
-        Task result = victim.insert(task);
+        Task result = victim.save(task);
 
         assertThat(result).isEqualTo(expectedTask());
     }
 
     @Test
     public void shouldFindById() {
-        victim.insert(task);
+        victim.save(task);
 
         Optional<Task> result = victim.findTaskById(TASK_ID);
         assertThat(result).isNotEmpty();
@@ -36,7 +36,7 @@ public class TaskInMemoryRepositoryTest {
 
     @Test
     public void shouldFindByName() {
-        victim.insert(task);
+        victim.save(task);
 
         Optional<Task> result = victim.findTaskByName(TASK_NAME);
         assertThat(result).isNotEmpty();
@@ -45,7 +45,7 @@ public class TaskInMemoryRepositoryTest {
 
     @Test
     public void shouldExistByName() {
-        victim.insert(task);
+        victim.save(task);
 
         boolean result = victim.existsByName(TASK_NAME);
         assertThat(result).isTrue();

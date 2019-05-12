@@ -4,8 +4,6 @@ import com.javaguru.todolist.domain.Task;
 import com.javaguru.todolist.repository.TaskInMemoryRepository;
 import com.javaguru.todolist.service.validation.TaskValidationService;
 
-import java.util.NoSuchElementException;
-
 public class TaskService {
 
     private final TaskInMemoryRepository repository;
@@ -19,7 +17,7 @@ public class TaskService {
 
     public Long createTask(Task task) {
         validationService.validate(task);
-        Task createdTask = repository.insert(task);
+        Task createdTask = repository.save(task);
         return createdTask.getId();
     }
 
